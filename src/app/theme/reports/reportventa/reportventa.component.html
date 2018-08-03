@@ -1,0 +1,152 @@
+<simple-notifications [options]="options"></simple-notifications>
+
+<div class="page-body">
+  <div class="row">
+    <div class="col-lg-12">
+      <app-card [cardOptionBlock]="true">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-sm-4">
+                <h6>SEGMENTO</h6>
+              </div>
+              <div class="col-sm-4">
+                <h6>MARCA</h6>
+              </div>
+              <div class="col-sm-4">
+                <h6>CONCESIONARIO</h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6>AÑO</h6>
+              </div>
+              <div class="col-sm-3">
+                <h6>MES</h6>
+              </div>
+              <div class="col-sm-3">
+                <h6>% CONTA.</h6>
+              </div>
+              <div class="col-sm-3">
+                <h6>CONTACTOS VÁLIDOS</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-sm-4">
+                <select name="select" class="form-control form-control-primary" [(ngModel)]="selectedFilters.segmento" (change)="getSatisfaccionGeneral()">                   
+                        <option *ngFor="let x of segmentosOptions" [ngValue]="x.value" >{{x.label}}</option>                    
+                </select>
+                <!--<ng-select [ngClass]="'ng-select'" loading="true" searchable="false" [options]="segmentosOptions" 
+                  (blur)="getSatisfaccionGeneral()"> </ng-select>-->
+              </div>
+              <div class="col-sm-4">
+                  <select name="select" class="form-control form-control-primary" [(ngModel)]="selectedFilters.marca" (change)="getSatisfaccionGeneral()">                   
+                      <option *ngFor="let x of marcasOptions" [ngValue]="x.value" >{{x.label}}</option>                    
+              </select>
+                <!--<ng-select [ngClass]="'ng-select'" [options]="marcasOptions" [(ngModel)]="selectedFilters.marca" (change)="getSatisfaccionGeneral()">
+                </ng-select>-->
+              </div>
+              <div class="col-sm-4">
+                <!--<ng-select [ngClass]="'ng-select'" [options]="concesionariosOptions" [(ngModel)]="selectedFilters.concesionario" (change)="getSatisfaccionGeneral()">
+                </ng-select>-->
+                <select name="select" class="form-control form-control-primary" [(ngModel)]="selectedFilters.concesionario" (change)="getSatisfaccionGeneral()">                   
+                    <option *ngFor="let x of concesionariosOptions" [ngValue]="x.value" >{{x.label}}</option>                    
+            </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-sm-3">
+                  <select name="select" class="form-control form-control-primary" [(ngModel)]="selectedFilters.anio" (change)="getSatisfaccionGeneral()">                   
+                      <option *ngFor="let x of anioOptions" [ngValue]="x.value" >{{x.label}}</option>                    
+              </select>
+                <!--<ng-select [ngClass]="'ng-select'" [options]="anioOptions" [(ngModel)]="selectedFilters.anio" (change)="getSatisfaccionGeneral()">
+                </ng-select>-->
+              </div>
+              <div class="col-sm-3">
+                  <select name="select" class="form-control form-control-primary" [(ngModel)]="selectedFilters.mes" (change)="getSatisfaccionGeneral()">                   
+                      <option *ngFor="let x of mesOptions" [ngValue]="x.value" >{{x.label}}</option>                    
+              </select>
+                <!--<ng-select [ngClass]="'ng-select'" [options]="mesOptions" [(ngModel)]="selectedFilters.mes" (change)="getSatisfaccionGeneral()">
+                </ng-select>-->
+              </div>
+              <div class="col-sm-3">
+                <span class="btn btn-primary">{{selectedFilters.contactabilidad}} </span>
+              </div>
+              <div class="col-sm-3">
+                <span class="btn btn-primary">{{selectedFilters.contactos}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </app-card>
+    </div>
+    <div class="col-sm-6">
+      <app-card [title]="'B1A. MOTIVOS DE SATISFACCIÓN  - PORCENTAJES - MEDICIÓN'">
+        <div id="chartdiv" style="height: 250px"></div>
+      </app-card>
+    </div>
+    
+    <div class="col-sm-6">
+      <app-card [title]="'B1. SATISFACCIÓN NETA - PORCENTAJES - TENDENCIA'">         
+        <div id="chartdivporcentaje" style="height: 250px"></div>
+      </app-card>
+    </div>
+
+    <div class="col-lg-12">
+      <app-card [title]="'B1A. MOTIVOS DE SATISFACCIÓN – PORCENTAJE – MEDICIÓN'" >
+        <div class="row">
+        <div class="col-sm-4">
+            <div id="chartdivsatisfaccion1" style="height: 250px"></div>
+        </div>
+        <div class="col-sm-4">
+            <div id="chartdivsatisfaccion2" style="height: 250px"></div>
+        </div>
+        <div class="col-sm-4">
+            <div id="chartdivsatisfaccion3" style="height: 250px"></div>
+        </div>
+      </div>
+      </app-card>
+    </div>
+
+    <div class="col-sm-6">
+        <app-card [title]="'I1. RETORNO AL CONCESIONARIO - PORCENTAJES - TENDENCIA'">
+          <div id="chartdivretorno" style="height: 250px"></div>
+        </app-card>
+      </div>
+  
+      <div class="col-sm-6">
+        <app-card [title]="'I1B. MOTIVOS DE RETORNO - PORCENTAJES - MEDICIÓN'">
+          <div id="chartdivmotivos" style="height: 250px"></div>
+        </app-card>
+      </div>
+
+      <div class="col-sm-6">
+          <app-card [title]="'J1. RECOMENDACIÓN - PORCENTAJES - TENDENCIA'">
+            <div id="chartdivrecomendacion" style="height: 250px"></div>
+          </app-card>
+        </div>
+    
+        <div class="col-sm-6">
+          <app-card [title]="'C1A. SATISFACCIÓN ATENCIÓN DEL VENDEDOR - PORCENTAJES - TENDENCIA'">
+            <div id="chartdivatencion" style="height: 250px"></div>
+          </app-card>
+        </div>
+
+    <div class="col-sm-12">
+      <app-card [title]="'P1. DÍAS TRANSCURIDOS ENTRE LA ENTREGA Y LA COMPRA - PROMEDIO - TENDENCIA'" [blockClass]="'text-center'">
+          <div id="chartdivline" style="height: 250px"></div>
+      </app-card>
+    </div>
+  
+  </div>
+</div>

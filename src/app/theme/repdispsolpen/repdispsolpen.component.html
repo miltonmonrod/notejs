@@ -1,0 +1,101 @@
+<simple-notifications [options]="options"></simple-notifications>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Reporte solicitudes pendientes'" [cardOptionBlock]="true">
+                <dx-data-grid id="gridContainer" [dataSource]="Lista" showBorders="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true">
+                    <dxo-export [enabled]="true" fileName="Reporte de solicitudes pendientes"></dxo-export>
+                    <dxo-filter-row [visible]="true"></dxo-filter-row>
+                    <dxo-header-filter [visible]="true"></dxo-header-filter>
+                    <dxo-group-panel [visible]="true" emptyPanelText="Arrastra una columna aquí para agrupar por ella"></dxo-group-panel>
+                    <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
+                    <dxi-column caption="Acciones" cellTemplate="accionCellTemplate"></dxi-column>
+                    <dxi-column dataField="IDREPORTEDISPCOMERCIALIZACION" caption="ID" [visible]="true"></dxi-column>
+                    <dxi-column dataField="NOMBRE" caption="Tipo reporte"></dxi-column>
+                    <dxi-column dataField="RAZONSOCIAL" caption="Establecimiento"></dxi-column>
+                    <dxi-column dataField="NUMEROREGISTROSANITARIO" caption="Registro sanitario"></dxi-column>
+                    <dxi-column dataField="NUMEROEXPEDIENTE" caption="Número de expediente"></dxi-column>
+                    <dxi-column dataField="NOMBREMODALIDAD" caption="Modalidad"></dxi-column>
+                    <dxi-column dataField="RAZONSOCIALTITULAR" caption="Titular / Importador"></dxi-column>
+                    <dxi-column dataField="NOMBREPRODUCTO" caption="Producto"></dxi-column>
+                    <dxi-column dataField="NOMBREPRINCIPIOACTIVO" caption="Principio activo"></dxi-column>
+                    <dxi-column dataField="CONCENTRACIONPPIOACTIVO" caption="Concentración"></dxi-column>
+                    <dxi-column dataField="FECHAINIVIGENCIADISP" caption="Vigencia"></dxi-column>
+                    <dxi-column dataField="MOTIVOREPORTEDISP" caption="Motivo"></dxi-column>
+                    <dxo-remote-operations [sorting]="true" [paging]="true">
+                    </dxo-remote-operations>
+                    <dxo-summary>
+                        <dxi-total-item column="idreportetipoproducto" summaryType="count" displayFormat="Cantidad: {0}">
+                        </dxi-total-item>
+                    </dxo-summary>
+                    <dxo-paging [pageSize]="10"></dxo-paging>
+                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 40]"></dxo-pager>
+                    <div *dxTemplate="let d of 'accionCellTemplate'">
+                        <div class="button-cell" style="text-align: center;">
+                            <i style="font-size:20px; cursor:pointer;" class="icofont icofont-law-document" placement="right" ngbTooltip="Seleccionar"
+                                (click)="cargarEditCampo(d.data)"></i>
+                        </div>
+                    </div>
+                </dx-data-grid>
+            </app-card>
+        </div>
+        <div class="col-sm-12">
+            <app-card *ngIf="displayConcepto" [title]="">
+                <div class="md-tabs md-card-tabs">
+                    <ngb-tabset>
+                        <ngb-tab title="Emitir concepto sobre la solicitud">
+                            <ng-template ngbTabContent>
+                                <div [@fadeInOutTranslate] class="m-t-15">
+                                    <form #formCc="ngForm">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">* Vigencia:</label>
+                                                    <div class="col-sm-8 input-group">
+                                                        <input class="form-control" placeholder="dd/mm/aaaa" [disabled]="true" name="FECHAINIVIGENCIADISP" [(ngModel)]="Reporte.FECHAINIVIGENCIADISP"
+                                                            ngbDatepicker #FECHAINIVIGENCIADISP="ngbDatepicker">
+                                                        <div class="input-group-addon bg-default" (click)="FECHAINIVIGENCIADISP.toggle()">
+                                                            <span class="icofont icofont-ui-calendar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">Motivo de fuerza mayor o caso fortuito, plenamente probadosy justificaados,
+                                                        por los cuales no puede comercializar el producto:</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea cols="100" class="form-control" [disabled]="true" name="MOTIVOREPORTEDISP" #MOTIVOREPORTEDISP="ngModel" [(ngModel)]="Reporte.MOTIVOREPORTEDISP"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" *ngIf="Reporte.NOMBRE === 'Comercialización por exportación'">
+                                                    <label class="col-sm-4 col-form-label">Ver documento soporte de la comercialización por exportación:</label>
+                                                    <div class="col-sm-8">
+                                                        <button class="btn btn-primary btn-outline-primary btn-icon" (click)="descargarSoporte()" placement="right" ngbTooltip="Ver soporte">
+                                                            <i class="icofont icofont-eye-alt"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">Concepto:</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea cols="100" class="form-control" name="conceptorevision" #conceptorevision="ngModel" [(ngModel)]="RevisionReporte.conceptorevision"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <button type="submit" (click)="Aceptar()" class="btn btn-primary m-b-0">Aceptar</button>
+                                                    <button type="button" (click)="Denegar()" class="btn btn-primary m-b-0">Denegar</button>
+                                                    <button type="button" (click)="showPanel()" class="btn btn-primary m-b-0">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                    </ngb-tabset>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>

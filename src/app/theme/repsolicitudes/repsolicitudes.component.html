@@ -1,0 +1,39 @@
+<simple-notifications [options]="options"></simple-notifications>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Reporte'" [cardOptionBlock]="true">
+                <dx-data-grid id="gridContainer" [dataSource]="Lista" showBorders="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true">
+                    <dxo-export [enabled]="true" fileName="Reporte consolidado de solicitudes"></dxo-export>
+                    <dxo-filter-row [visible]="true"></dxo-filter-row>
+                    <dxo-header-filter [visible]="true"></dxo-header-filter>
+                    <dxo-group-panel [visible]="true" emptyPanelText="Arrastra una columna aquí para agrupar por ella"></dxo-group-panel>
+                    <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
+                    <dxi-column dataField="IDREPORTEDISPCOMERCIALIZACION" caption="ID" [visible]="true"></dxi-column>
+                    <dxi-column dataField="NOMBRE" caption="Tipo reporte"></dxi-column>
+                    <dxi-column dataField="RAZONSOCIAL" caption="Establecimiento"></dxi-column>
+                    <dxi-column dataField="NUMEROREGISTROSANITARIO" caption="Registro sanitario"></dxi-column>
+                    <dxi-column dataField="NUMEROEXPEDIENTE" caption="Número de expediente"></dxi-column>
+                    <dxi-column dataField="NOMBREMODALIDAD" caption="Modalidad"></dxi-column>
+                    <dxi-column dataField="RAZONSOCIALTITULAR" caption="Titular / Importador"></dxi-column>
+                    <dxi-column dataField="NOMBREPRODUCTO" caption="Producto"></dxi-column>
+                    <dxi-column dataField="NOMBREPRINCIPIOACTIVO" caption="Principio activo"></dxi-column>
+                    <dxi-column dataField="CONCENTRACIONPPIOACTIVO" caption="Concentración"></dxi-column>
+                    <dxi-column dataField="FECHAINIVIGENCIADISP" caption="Vigencia"></dxi-column>
+                    <dxi-column dataField="MOTIVOREPORTEDISP" caption="Motivo"></dxi-column>
+                    <dxi-column dataField="INDAPROBACION" caption="Estado"></dxi-column>
+                    <dxi-column dataField="CONCEPTOREVISION" caption="Concepto"></dxi-column>
+                    <dxi-column dataField="FECHAAPROBACION" caption="Fecha concepto"></dxi-column>
+                    <dxo-remote-operations [sorting]="true" [paging]="true">
+                    </dxo-remote-operations>
+                    <dxo-summary>
+                        <dxi-total-item column="idreportetipoproducto" summaryType="count" displayFormat="Cantidad: {0}">
+                        </dxi-total-item>
+                    </dxo-summary>
+                    <dxo-paging [pageSize]="10"></dxo-paging>
+                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 40]"></dxo-pager>
+                </dx-data-grid>
+            </app-card>
+        </div>
+    </div>
+</div>

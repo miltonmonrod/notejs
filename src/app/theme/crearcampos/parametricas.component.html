@@ -1,0 +1,160 @@
+<simple-notifications [options]="options"></simple-notifications>
+<!-- <ng-template [ngIf]="_usuario.UsuarioRolID=='admin'" [ngIfElse]="noautorizado" > -->
+<div class="page-body">
+  <!--profile cover end-->
+  <div class="row" *ngIf="displayLista">
+    <div class="col-lg-12">
+      <button type="button" (click)="showPanel('C')" class="btn btn-primary m-b-0">Crear nuevo campo</button>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-card *ngIf="displayLista" [title]="'Consulta campos reporte TRAZA por producto'" [cardOptionBlock]="true">
+        <dx-data-grid id="gridContainer" [dataSource]="njLista" showBorders="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true">
+          <dxo-export [enabled]="true" fileName="Bolsa de campos"></dxo-export>
+          <dxo-filter-row [visible]="true"></dxo-filter-row>
+          <dxo-header-filter [visible]="true"></dxo-header-filter>
+          <dxo-group-panel [visible]="true" emptyPanelText="Arrastra una columna aquí para agrupar por ella"></dxo-group-panel>>
+          <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
+          <dxi-column caption="Acciones" cellTemplate="accionCellTemplate"></dxi-column>
+          <dxi-column dataField="idconfigcamposreporte" caption="ID" visible="false"></dxi-column>
+          <dxi-column dataField="nombrecampo" caption="Nombre"></dxi-column>
+          <dxi-column dataField="nombretipoformato" caption="Nombre tipo formato"></dxi-column>
+          <dxi-column dataField="longitud" caption="Longitud"></dxi-column>
+          <dxi-column dataField="nombretipocampo" caption="Nombre tipo campo"></dxi-column>
+          <dxi-column dataField="destinovalidacion" caption="Destino validación"></dxi-column>
+          <dxi-column dataField="nombretipovalidacion" caption="Nombre tipo validación"></dxi-column>
+          <dxi-column dataField="indobligatoriedad" caption="¿Obligatorio?"></dxi-column>
+          <dxi-column dataField="nombrelistavalores" caption="Nombre lista valores"></dxi-column>
+          <dxi-column dataField="nombreestado" caption="Estado"></dxi-column>
+          <dxi-column dataField="fechacreacionformat" caption="Fecha creación"></dxi-column>
+          <dxi-column dataField="usuariocreacion" caption="Usuario creación"></dxi-column>
+          <dxo-remote-operations [sorting]="true" [paging]="true">
+          </dxo-remote-operations>
+          <dxo-summary>
+            <dxi-total-item column="idconfigcamposreporte" summaryType="count" displayFormat="Cantidad: {0}">
+            </dxi-total-item>
+          </dxo-summary>
+          <dxo-paging [pageSize]="10"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 40]"></dxo-pager>
+          <div *dxTemplate="let d of 'accionCellTemplate'">
+            <div class="button-cell" style="text-align: center;">
+              <i style="font-size:20px; cursor:pointer;" class="icofont icofont-law-document" placement="right" ngbTooltip="Actualizar"
+                (click)="cargarEditCampo(d.data.idconfigcamposreporte)"></i>
+            </div>
+          </div>
+        </dx-data-grid>
+      </app-card>
+    </div>
+    <div class="col-sm-12">
+      <app-card *ngIf="displayCrear" [title]="'Crear campo nuevo'" [blockClass]="'box-list m-t-15'">
+        <form #formCc="ngForm" (ngSubmit)="onSubmit(formCc.valid)">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Nombre del campo:</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" [class.form-control-danger]="(formCc.submitted && nombrecampo.invalid) || (nombrecampo.touched && nombrecampo.invalid)"
+                    name="nombrecampo" #nombrecampo="ngModel" [(ngModel)]="campo.nombrecampo" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Tipo fromato:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_codtipoformato"
+                    name="codtipoformato" #codtipoformato [(ngModel)]="campo.codtipoformato" (change)="class_codtipoformato = campo.codtipoformato === null;">
+                    <option *ngFor="let item of ListaFormato" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Tipo campo:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_codtipocampo"
+                    name="codtipocampo" #codtipocampo [(ngModel)]="campo.codtipocampo" (change)="class_codtipocampo = campo.codtipocampo === '';campo.codlistavalores = null;">
+                    <option *ngFor="let item of ListaTipoCampo" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="campo.codtipocampo === '2'">
+                <label class="col-sm-4 col-form-label">* Lista de valores:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_codlistavalores"
+                    name="codlistavalores" #codlistavalores [(ngModel)]="campo.codlistavalores" (change)="class_codlistavalores = campo.codlistavalores === null;">
+                    <option *ngFor="let item of ListaValores" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Longitud:</label>
+                <div class="col-sm-8">
+                  <input type="number" class="form-control" [class.form-control-danger]="(formCc.submitted && longitud.invalid) || (longitud.touched && longitud.invalid)"
+                    name="longitud" #longitud="ngModel" [(ngModel)]="campo.longitud" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Obligatorio:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_indobligatoriedad"
+                    name="indobligatoriedad" #indobligatoriedad [(ngModel)]="campo.indobligatoriedad" (change)="class_indobligatoriedad = campo.indobligatoriedad === ''">
+                    <option *ngFor="let item of ListaObli" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Indicador de validación:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_destinovalidacion"
+                    name="destinovalidacion" #destinovalidacion [(ngModel)]="campo.destinovalidacion" (change)="class_destinovalidacion = campo.destinovalidacion === ''; campo.codtipovalidacion = null;">
+                    <option *ngFor="let item of ListaObli" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="campo.destinovalidacion === 'S'">
+                <label class="col-sm-4 col-form-label">* Servicios de validación:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_codtipovalidacion"
+                    name="codtipovalidacion" #codtipovalidacion [(ngModel)]="campo.codtipovalidacion" (change)="class_codtipovalidacion = campo.codtipovalidacion === null;">
+                    <option *ngFor="let item of ListaValidaciones" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">* Estado:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" required [class.form-control-danger]="class_estado"
+                    name="estado" #estado [(ngModel)]="campo.estado" (change)="class_estado = campo.estado === ''">
+                    <option *ngFor="let item of ListaEstado" [ngValue]="item.Id">{{item.Nombre}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <button type="submit" class="btn btn-primary m-b-0">Guardar</button>
+              <button type="button" (click)="showPanel('V')" class="btn btn-primary m-b-0">Volver</button>
+            </div>
+          </div>
+        </form>
+      </app-card>
+    </div>
+  </div>
+</div>
+
+<!-- </ng-template>
+<ng-template #noautorizado>
+  <div class="page-body">
+    <div class="row">
+      <div class="col-lg-12">
+          <div class="alert alert-danger background-danger">
+              <button type="button" class="close" >
+                <i class="icofont icofont-close-line-circled text-white"></i>
+              </button>
+              <strong>Acceso no autorizado!</strong> usted no tiene permiso para ingresar a este modulo
+            </div>
+      </div>
+    </div>
+  </div>
+</ng-template> -->

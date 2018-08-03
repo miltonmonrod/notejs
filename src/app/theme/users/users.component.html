@@ -1,0 +1,161 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ng-template [ngIf]="_usuario.UsuarioRolID=='admin'" [ngIfElse]="noautorizado" >
+<div class="page-body">
+
+  <!--profile cover end-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-tabs md-card-tabs">
+        <ngb-tabset>
+          <ngb-tab title="Administrar Usuarios">
+            <ng-template ngbTabContent>
+              <div [@fadeInOutTranslate] class="m-t-15">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <app-card [title]="'Consulta de Usuarios'" [cardOptionBlock]="true">
+                          <dx-data-grid  id="gridContainer" 
+                          [dataSource]="rowsUsers" 
+                          showBorders="true" 
+                          [columnAutoWidth]="true"
+                          [rowAlternationEnabled]="true">
+                            <dxo-filter-row [visible]="true"></dxo-filter-row>
+                            <dxo-header-filter [visible]="true"></dxo-header-filter>
+                            <dxo-group-panel [visible]="false"></dxo-group-panel>  
+                            <dxo-search-panel  [visible]="true"   [width]="240" placeholder="Buscar..."></dxo-search-panel>                         
+                            <dxi-column dataField="usuarioID" caption="ID"></dxi-column>
+                            <dxi-column dataField="usuarioNombreCompleto" caption="Nombre"></dxi-column>
+                            <dxi-column dataField="usuarioEmail" caption="Email"></dxi-column>
+                            <dxi-column dataField="usuarioRolID" caption="Rol"></dxi-column>
+                            <dxi-column caption="Acciones" cellTemplate="accionCellTemplate"></dxi-column>                         
+                            <dxo-remote-operations [sorting]="true" [paging]="true">
+                            </dxo-remote-operations>
+                            <dxo-paging [pageSize]="8"></dxo-paging>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+                            <div *dxTemplate="let d of 'accionCellTemplate'">
+                                <div class="button-cell">
+                                          <i style="font-size:20px; cursor:pointer;" class="icofont icofont-law-document" placement="left" ngbTooltip="Actualizar" (click)="editClick(d.data)"></i>
+                                          <i style="font-size:20px; cursor:pointer;" class="icofont icofont-notepad" placement="left" ngbTooltip="Detalle" (click)="detailClick(d.data)"></i>
+                                          <i style="font-size:20px; cursor:pointer;" class="icofont icofont-trash" placement="left" ngbTooltip="Eliminar" (click)="deleteClick(d.data)"></i>
+                                </div>
+                            </div>
+                          </dx-data-grid>
+                        </app-card>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-sm-12">
+                          <app-card [title]="'Guardar Usuarios'" [headerContent]="'En este formulario usted puede registrar o modificar un usuario'" [cardOptionBlock]="true">
+                              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                                  <input type="hidden"  id="usuarioID"  formControlName="usuarioID" value=""/>
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">*Nombre Completo:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="nombreCompleto" placeholder="Por favor ingrese el nombre" formControlName="nombreCompleto">
+                                    <div class="messages text-danger" *ngIf="userForm.controls.nombreCompleto.errors?.required">Campo obligatorio</div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">*Email:</label>
+                                    <div class="col-sm-8">
+                                      <input type="email" class="form-control" id="email" placeholder="Email del usuario" formControlName="email">
+                                      <div class="messages text-danger" *ngIf="userForm.controls.email.errors?.required">Campo obligatorio</div>
+                                      <div class="messages text-danger" *ngIf="userForm.controls.email.errors?.email">Formato  email invalido</div>
+                                    </div>
+                                  </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">*Password:</label>
+                                  <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="password"  placeholder="Password" formControlName="password">
+                                    <div class="messages text-danger error" *ngIf="userForm.controls.password.errors?.required">Campo obligatorio</div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label">*Confirmar Password:</label>
+                                  <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="rpassword" placeholder="Confirmar Password" formControlName="rpassword">
+                                    <div class="messages text-danger" *ngIf="userForm.controls.rpassword.errors?.required">Campo obligatorio</div>
+                                    <div class="messages text-danger" *ngIf="userForm.controls.rpassword.errors?.equalTo">El password no es igual a la anterior</div>
+                        
+                                  </div>
+                                </div>
+                                
+                                <div class="row">
+                                  <label class="col-sm-4 col-form-label">*Rol/Perfil:</label>
+                                  <div class="col-sm-8">
+                                    <div class="form-check form-check-inline">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" value="admin" formControlName="rol"> Administrador
+                                      </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" value="usuario" formControlName="rol" checked> Usuario normal
+                                      </label>
+                                    </div>
+                                    <div class="messages text-danger" *ngIf="userForm.controls.rol.errors?.required">debe seleccionar un rol o perfil para el usuario</div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">*Concesionarios:</label>
+                                    <div class="col-sm-8">
+                                        <ng-select [ngClass]="'ng-select'" [options]="concesionariosOption" [multiple]="true"  [allowClear]="true" [(ngModel)]="selectedOptions" id="concesionario" formControlName="concesionario" ></ng-select> 
+                                        <div class="messages text-danger" *ngIf="userForm.controls.concesionario.errors?.required">Campo obligatorio</div>
+                                    </div>
+                                   
+                                </div>
+                                
+                                <div class="form-group row">
+                                  <label class="col-sm-4"></label>
+                                  <div class="col-sm-8">
+                                    <button type="submit" class="btn btn-primary m-b-0" [disabled]="!userForm.valid">Guardar</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </app-card>
+                      </div>
+                    </div>                    
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+  <app-modal-animation [modalID]="'effect-13'" [modalClass]="'md-effect-13'">
+      <h3>Detalles del Usuario</h3>
+      <div>
+        <p>Datos de la cuenta de usuario:</p>
+        <ul>
+          <li><strong>ID:</strong> {{usuario.usuarioID}} </li>
+          <li><strong>Nombre Completo:</strong> {{usuario.usuarioNombreCompleto}} </li>
+          <li><strong>Email:</strong> {{usuario.usuarioEmail}}</li>
+          <li><strong>Rol:</strong> {{usuario.usuarioRolID}}</li>
+          <li><strong>Concecionarios:  {{selectedOptions}}</strong> </li>
+        </ul>
+        <button (click)="closeMyModal($event)" class="btn btn-primary md-close">OK</button>
+      </div>
+      <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+    </app-modal-animation>
+</div>
+</ng-template>
+<ng-template #noautorizado>
+  <div class="page-body">
+    <div class="row">
+      <div class="col-lg-12">
+          <div class="alert alert-danger background-danger">
+              <button type="button" class="close" >
+                <i class="icofont icofont-close-line-circled text-white"></i>
+              </button>
+              <strong>Acceso no autorizado!</strong> usted no tiene permiso para ingresar a este modulo
+            </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

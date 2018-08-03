@@ -1,0 +1,85 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "webapp-derco-v1.2018"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "assets/amcharts/images"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/bootstrap/scss/bootstrap.scss",
+        "../node_modules/font-awesome-scss/scss/font-awesome.scss",
+        "assets/icon/themify-icons/themify-icons.css",
+        "../node_modules/devextreme/dist/css/dx.common.css", 
+        "../node_modules/devextreme/dist/css/dx.light.css",
+        "assets/amcharts/plugins/export/export.css", 
+        "scss/style.scss"
+      ],
+      "scripts": [
+        "assets/amcharts/amcharts.js",
+        "assets/amcharts/xy.js",
+        "assets/amcharts/serial.js",
+        "assets/amcharts/gauge.js",
+        "assets/amcharts/pie.js",
+        "assets/amcharts/gantt.js",
+        "assets/amcharts/funnel.js",
+        "assets/amcharts/radar.js",        
+        "assets/amcharts/themes/light.js",
+        "assets/amcharts/plugins/export/export.js",       
+        "assets/amcharts/plugins/export/libs/fabric.js/fabric.min.js",
+        "assets/amcharts/plugins/export/libs/FileSaver.js/FileSaver.min.js",
+        "assets/amcharts/plugins/export/libs/jszip/jszip.min.js",
+        "assets/amcharts/plugins/export/libs/pdfmake/pdfmake.min.js",
+        "assets/amcharts/lang/es.js",
+        "assets/amcharts/plugins/export/lang/es.js",
+        "assets/jszip/jszip.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {}
+  }
+}

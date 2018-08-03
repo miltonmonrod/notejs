@@ -1,0 +1,18 @@
+export class ReporteSolicitudes {
+    IDREPORTEDISPCOMERCIALIZACION: number;
+    NOMBRE: string;
+    NUMEROREGISTROSANITARIO: String;
+	RAZONSOCIAL: string;
+	NUMEROEXPEDIENTE: string;
+    NOMBREMODALIDAD: string;
+    RAZONSOCIALTITULAR: string;
+    NOMBREPRODUCTO: string;
+    NOMBREPRINCIPIOACTIVO: string;
+    CONCENTRACIONPPIOACTIVO: string;
+    FECHAINIVIGENCIADISP: string;
+    MOTIVOREPORTEDISP: string;
+    INDAPROBACION: string;
+    CONCEPTOREVISION: string;
+    FECHAAPROBACION: string;
+        
+}

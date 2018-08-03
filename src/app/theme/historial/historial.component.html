@@ -1,0 +1,57 @@
+<simple-notifications [options]="options"></simple-notifications>
+<!-- <ng-template [ngIf]="_usuario.UsuarioRolID=='admin'" [ngIfElse]="noautorizado" > -->
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Panel card start -->
+        <app-card [title]="'Filtre su reporte por vigencia'" [blockClass]="'panels-wells'" [cardOptionBlock]="true">
+            <form #formTrazaProd="ngForm" (ngSubmit)="onSubmit(formTrazaProd.valid)">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">* Vigencia:</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" required [class.form-control-danger]="class_aniovigencia" name="aniovigencia" #aniovigencia
+                                    [(ngModel)]="reporte.aniovigencia" (change)="class_aniovigencia = reporte.aniovigencia === null;">
+                                    <option *ngFor="let item of ListaVigencia" [ngValue]="item.Id">{{item.Nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-primary m-b-0">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <dx-data-grid id="gridContainer" [dataSource]="ListaReporte" showBorders="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true">
+                            <dxo-export [enabled]="true" fileName="Estado reportes"></dxo-export>
+                            <dxo-filter-row [visible]="true"></dxo-filter-row>
+                            <dxo-header-filter [visible]="true"></dxo-header-filter>
+                            <dxo-group-panel [visible]="true" emptyPanelText="Arrastra una columna aquí para agrupar por ella"></dxo-group-panel>>
+                            <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
+                            <dxi-column dataField="IDREPORTE" caption="Núm. Identificador" visible="false"></dxi-column>
+                            <dxi-column dataField="ANIOVIGENCIA" caption="Vigencia"></dxi-column>
+                            <dxi-column dataField="MES" caption="Mes"></dxi-column>
+                            <dxi-column dataField="NOMBREARCHIVO" caption="Nombre del archivo"></dxi-column>
+                            <dxi-column dataField="TIPOARCHIVO" caption="Tipo de archivo"></dxi-column>
+                            <dxi-column dataField="FECHACARGUE" caption="Fecha cargue"></dxi-column>
+                            <dxi-column dataField="FECHAINIPROC" caption="Fec. Ini. proceso"></dxi-column>
+                            <dxi-column dataField="NROREGPROCESADOS" caption="# Registros"></dxi-column>
+                            <dxi-column dataField="NOMBRECOMPLETO" caption="Usuario"></dxi-column>
+                            <dxi-column dataField="ESTADO" caption="Estado"></dxi-column>
+                            <dxo-remote-operations [sorting]="true" [paging]="true">
+                            </dxo-remote-operations>
+                            <dxo-summary>
+                                <dxi-total-item column="IDREPORTE" summaryType="count" displayFormat="Cantidad: {0}">
+                                </dxi-total-item>
+                            </dxo-summary>
+                            <dxo-paging [pageSize]="10"></dxo-paging>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 40]"></dxo-pager>
+                        </dx-data-grid>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+</div>

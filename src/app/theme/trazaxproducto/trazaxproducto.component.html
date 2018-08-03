@@ -1,0 +1,96 @@
+<simple-notifications [options]="options"></simple-notifications>
+<!-- <ng-template [ngIf]="_usuario.UsuarioRolID=='admin'" [ngIfElse]="noautorizado" > -->
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Panel card start -->
+        <app-card [title]="'Instrucciones para realizar el reporte'" [blockClass]="'panels-wells'" [cardOptionBlock]="true">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading bg-primary">
+                            Por favor leer las instruciones antes de continuar con el proceso
+                        </div>
+                        <div class="panel-body">
+                            <p>Definir el texto de las instrucciones en esta franja
+                            </p>
+                        </div>
+                        <div class="panel-footer text-primary">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a style="cursor:pointer;" (click)="verArchivo()">Descargar formato establecido para el cargue</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="text-right">
+                                        <a style="cursor:pointer;">Descargar instructivo</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div *ngIf="msjCargue !== ''" class="alert alert-success background-success">
+                <button type="button" class="close" appRemoveAlert>
+                    <i class="icofont icofont-close-line-circled text-white"></i>
+                </button>
+                <strong>{{msjCargue}}</strong> 
+            </div>
+            <br/>
+            <form #formTrazaProd="ngForm">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">* Vigencia:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" required [class.form-control-danger]="class_aniovigencia" name="aniovigencia" #aniovigencia
+                                    [(ngModel)]="reporte.aniovigencia" (change)="class_aniovigencia = reporte.aniovigencia === null;">
+                                    <option *ngFor="let item of ListaVigencia" [ngValue]="item.Id">{{item.Nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">* Mes:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" required [class.form-control-danger]="class_mesvigencia" name="mesvigencia" #mesvigencia [(ngModel)]="reporte.mesvigencia"
+                                    (change)="class_mesvigencia = reporte.mesvigencia === null;">
+                                    <option *ngFor="let item of ListaMeses" [ngValue]="item.Id">{{item.Nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" *ngIf="reporte.aniovigencia !== null && reporte.mesvigencia !== null">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">* Seleccione el archivo a cargar:</label>
+                            <div class="col-sm-4">
+                                <dx-file-uploader #fileUploader uploadUrl={{url}} [multiple]="false" accept=".zip" [(value)]="value" uploadMode="useButtons"
+                                    labelText="o arrastrar archivo zip" selectButtonText="Seleccionar archivo" (onValueChanged)="addIdParameter($event)"
+                                    uploadButtonText="Subir" readyToUploadMessage="Listo para subir" uploadFailedMessage="Ocurrio un error al subir el archivo"
+                                    (onUploaded)="subidaCompleta($event)"></dx-file-uploader>
+                            </div>
+                            <div class="col-sm-4">
+                                <div *ngIf="value.length > 0">
+                                    <h5 class="sub-title">Archivo seleccionado</h5>
+                                </div>
+                                <div *ngFor="let file of value">
+                                    <div class="selected-item">
+                                        Nombre:
+                                        <span>{{file.name}}</span>
+                                        <br /> Tamaño:
+                                        <span>{{file.size}}</span>bytes
+                                        <br /> Tipo:
+                                        <span>{{file.type}}</span>
+                                        <br /> Fecha ultima modificación:
+                                        <span>{{file.lastModifiedDate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+</div>
