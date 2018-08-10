@@ -129,6 +129,7 @@ export class RepDispSolPenComponent implements OnInit, AfterViewInit {
                     );
                     this.getReporteSolPen();
                     this.displayConcepto = false;
+                    this.RevisionReporte.conceptorevision = "";
                 } else {
                     this.servicePNotify.html(
                         '<h4>Error al salvar los datos <p>' + result.mensaje + '</p></h4>',

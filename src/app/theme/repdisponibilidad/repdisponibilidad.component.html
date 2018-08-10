@@ -6,10 +6,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">* Ingrese el registro INVIMA del producto:</label>
+                            <label class="col-sm-4 col-form-label">* Ingrese el n&uacute;mero de expediente:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="rs" #rs="ngModel" [(ngModel)]="registro.rs" required><br/>
-                                <small>Ejemplo: INVIMA {{date| date:'yyyy'}}M-0000000</small>
+                                <input type="number" class="form-control" name="rs" #rs="ngModel" [(ngModel)]="registro.rs" required>
                             </div>
                             <div class="col-sm-2">
                                 <button type="submit" (click)="BuscarRS()" class="btn btn-primary m-b-0">Buscar</button>
@@ -25,7 +24,9 @@
                     <dxo-group-panel [visible]="true" emptyPanelText="Arrastra una columna aquí para agrupar por ella"></dxo-group-panel>
                     <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
                     <dxi-column caption="Acciones" cellTemplate="accionCellTemplate"></dxi-column>
+                    <dxi-column dataField="nroregsan" caption="Registro sanitario"></dxi-column>
                     <dxi-column dataField="nroexpediente" caption="# Expediente"></dxi-column>
+                    <dxi-column dataField="fchvencimiento" caption="Vigencia"></dxi-column>
                     <dxi-column dataField="modcompuesta" caption="Modalidad"></dxi-column>
                     <dxi-column dataField="TITULAR" caption="Titular / Importador"></dxi-column>
                     <dxi-column dataField="nmbproducto1" caption="Producto"></dxi-column>
@@ -50,16 +51,6 @@
                 <form #formCc="ngForm" (ngSubmit)="onSubmitReporte(formCc.valid)">
                     <div class="row" *ngIf="reporte.numeroregistrosanitario !== null">
                         <div class="col-sm-12">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">* Vigencia:</label>
-                                <div class="col-sm-8 input-group">
-                                    <input class="form-control" placeholder="dd/mm/aaaa" name="fechainivigenciadisp" [(ngModel)]="reporte.fechainivigenciadisp"
-                                        ngbDatepicker #fechainivigenciadisp="ngbDatepicker" required [class.form-control-danger]="(formCc.submitted && fechainivigenciadisp.invalid) || (fechainivigenciadisp.touched && fechainivigenciadisp.invalid)">
-                                    <div class="input-group-addon bg-default" (click)="fechainivigenciadisp.toggle()">
-                                        <span class="icofont icofont-ui-calendar"></span>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">* Seleccione el tipo de reporte:</label>
                                 <div class="col-sm-8 input-group">
@@ -97,19 +88,16 @@
                                 <label class="col-sm-4 col-form-label">* Desea recibir un correo con la confirmación de la información reportada:</label>
                                 <div class="col-sm-8 input-group">
                                     <label>
-                                        <input type="radio" name="indnotificacioncorreo" #indnotificacioncorreo [(ngModel)]="reporte.indnotificacioncorreo" value="S"
-                                            (change)="changeEmail()" />&nbsp;Si</label>&nbsp;&nbsp;
+                                        <input type="radio" name="indnotificacioncorreo" #indnotificacioncorreo [(ngModel)]="reporte.indnotificacioncorreo" value="S"/>&nbsp;Si</label>&nbsp;&nbsp;
                                     <label>
-                                        <input type="radio" name="indnotificacioncorreo" #indnotificacioncorreo [(ngModel)]="reporte.indnotificacioncorreo" value="N"
-                                            (change)="changeEmail()" />&nbsp;No</label>&nbsp;&nbsp;
+                                        <input type="radio" name="indnotificacioncorreo" #indnotificacioncorreo [(ngModel)]="reporte.indnotificacioncorreo" value="N"/>&nbsp;No</label>&nbsp;&nbsp;
                                 </div>
                             </div>
-                            <div class="form-group row" *ngIf="reporte.indnotificacioncorreo === 'S'">
-                                <label class="col-sm-4 col-form-label">* Email:</label>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">* Correo electrónico de notificación:</label>
                                 <div class="col-sm-8 input-group">
                                     <input type="text" class="form-control" [class.form-control-danger]="(formCc.submitted && emailnotificacion.invalid) || (emailnotificacion.touched && emailnotificacion.invalid) || (emailnotificacion.errors?.pattern)"
-                                        name="emailnotificacion" #emailnotificacion="ngModel" [(ngModel)]="reporte.emailnotificacion" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                                        [required]="reporte.indnotificacioncorreo === 'S'">
+                                        name="emailnotificacion" #emailnotificacion="ngModel" [(ngModel)]="reporte.emailnotificacion" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required/>
                                 </div>
                             </div>
                         </div>

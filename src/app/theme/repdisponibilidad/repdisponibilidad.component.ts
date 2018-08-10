@@ -111,6 +111,9 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
     }
 
     BuscarRS() {
+        if(this.registro.rs === '' || this.registro.rs === null) {
+            return;
+        }
         this.parametricasService.getRegistroSanitario(this.registro.rs).subscribe(
             result => {
                 this.Lista = result;
@@ -160,6 +163,7 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
         this.reporte.razonsocialtitular = data.TITULAR;
         this.reporte.nombreprincipioactivo = data.principio_Activo;
         this.reporte.nombremodalidad = data.modcompuesta;
+        this.reporte.fechainivigenciadisp = data.fchvencimiento;
     }
 
     showPanel() {
@@ -236,11 +240,6 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
             this.titulo = "Justificación del reingreso:";
             this.reporte.fechafinvigenciadisp = null;
         }
-    }
-
-    changeEmail() {
-        if (this.reporte.indnotificacioncorreo === 'N')
-            this.reporte.emailnotificacion = "";
     }
 
     closeMyModal(event) {

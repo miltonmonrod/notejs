@@ -2,6 +2,7 @@ export class ReporteSolicitudes {
     IDREPORTEDISPCOMERCIALIZACION: number;
     NOMBRE: string;
     NUMEROREGISTROSANITARIO: String;
+    ESTADORS: String;
 	RAZONSOCIAL: string;
 	NUMEROEXPEDIENTE: string;
     NOMBREMODALIDAD: string;
