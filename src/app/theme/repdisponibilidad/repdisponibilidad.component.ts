@@ -99,7 +99,7 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
             codreportedisponibilidad: -1,
             motivoreportedisp: "",
             fechafinvigenciadisp: null,
-            indnotificacioncorreo: "N",
+            indnotificacioncorreo: "S",
             emailnotificacion: "",
             nombrearchivo: "",
             ruta: "",
@@ -118,7 +118,7 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
             result => {
                 this.Lista = result;
                 if(this.Lista.length === 0) {
-                    this.servicePNotify.info('TRAZA', 'No se encontró información del registro sanitario ingresado.', '');
+                    this.servicePNotify.info('TRAZA', 'No se encontró información del número de expediente ingresado.', '');
                     this.reporte = {
                         idreportedispcomercializacion: -1,
                         numeroexpediente: "",
@@ -132,7 +132,7 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
                         codreportedisponibilidad: -1,
                         motivoreportedisp: "",
                         fechafinvigenciadisp: null,
-                        indnotificacioncorreo: "N",
+                        indnotificacioncorreo: "S",
                         emailnotificacion: "",
                         nombrearchivo: "",
                         ruta: "",
@@ -172,7 +172,7 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
         this.reporte.codreportedisponibilidad = -1;
         this.reporte.motivoreportedisp = "";
         this.reporte.fechafinvigenciadisp = null;
-        this.reporte.indnotificacioncorreo = 'N';
+        this.reporte.indnotificacioncorreo = 'S';
         this.reporte.emailnotificacion = "";
     }
 
