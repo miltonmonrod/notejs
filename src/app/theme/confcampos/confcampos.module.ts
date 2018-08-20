@@ -9,7 +9,7 @@ import { DxDataGridModule, DxButtonModule, DxListModule, DxSelectBoxModule } fro
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from '../auth/token.interceptor';
+import { TokenInterceptor } from '../interceptor/token.interceptor';
 
 @NgModule({
   imports: [

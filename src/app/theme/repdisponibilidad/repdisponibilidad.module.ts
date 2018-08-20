@@ -7,7 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DxDataGridModule, DxButtonModule, DxListModule, DxSelectBoxModule, DxFileUploaderModule } from 'devextreme-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from '../auth/token.interceptor';
+import { TokenInterceptor } from '../interceptor/token.interceptor';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { isNumber, toInteger, padNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { NgbDateParserFormatter, NgbDateStruct, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';

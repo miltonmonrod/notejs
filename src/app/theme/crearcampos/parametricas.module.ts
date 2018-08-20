@@ -8,7 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DxDataGridModule, DxButtonModule } from 'devextreme-angular';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from '../auth/token.interceptor';
+import { TokenInterceptor } from '../interceptor/token.interceptor';
 
 @NgModule({
   imports: [

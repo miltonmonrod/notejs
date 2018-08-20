@@ -7,7 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DxDataGridModule, DxButtonModule, DxListModule, DxSelectBoxModule, DxFileUploaderModule } from 'devextreme-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from '../auth/token.interceptor';
+import { TokenInterceptor } from '../interceptor/token.interceptor';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 @NgModule({
     imports: [
