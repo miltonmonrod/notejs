@@ -1,11 +1,7 @@
-import { User } from "./user.model";
-import { Concesionario } from "./concesionario.model";
-
 export class Session {
-    public access_token: string;
-    public token_type:string;
-    public expires_in:number;
-    public user:User;
-    public concesionarios:Array<Concesionario>;
-  }
- 
+  public idsucursal: string;
+  public idusuario: string;
+  public idestablecimiento: string;
+  public email: string;
+  public idtipoproducto: string;
+}

@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
+import { initializer } from './util/app-init'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './layout/admin/admin.component';
@@ -27,6 +29,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     BreadcrumbsComponent
   ],
   imports: [
+    KeycloakAngularModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -38,10 +41,15 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     SimpleNotificationsModule.forRoot()
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      multi: true,
+      deps: [KeycloakService]
+    },
     MenuItems, AuthenticationService, NotificationsService, ToastyService
-
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-platformBrowserDynamic().bootstrapModule(AppModule);
+//platformBrowserDynamic().bootstrapModule(AppModule);

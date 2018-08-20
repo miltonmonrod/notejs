@@ -6,11 +6,9 @@ import { ParametricasRoutingModule } from './parametricas-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DxDataGridModule, DxButtonModule } from 'devextreme-angular';
-import { UsuariosService } from '../../services/usuario.service';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../auth/token.interceptor';
-import { SimpleNotificationsModule } from 'angular2-notifications';
-
 
 @NgModule({
   imports: [
@@ -23,15 +21,13 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     DxDataGridModule,
     DxButtonModule,
     SimpleNotificationsModule.forRoot()
-
   ],
   providers: [
-
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }
+      {
+          provide: HTTP_INTERCEPTORS,
+          useClass: TokenInterceptor,
+          multi: true
+      }
   ],
   declarations: [ParametricasComponent]
 })

@@ -1,71 +1,74 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AdminComponent} from './layout/admin/admin.component';
-import {AuthComponent} from './layout/auth/auth.component';
-import { AuthorizatedGuard } from './core/guards/authorizated.guard';
+import { AdminComponent } from './layout/admin/admin.component';
+import { AuthComponent } from './layout/auth/auth.component';
+import { AppAuthGuard } from './core/guards/authorizated.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminComponent, 
-    // canActivate: [ AuthorizatedGuard ],   
-    children: [
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      },     
-      {
-        path: 'dashboard',
-        loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
-      },           
-      {
-        path: 'reports',
-        loadChildren: './theme/reports/reports.module#ReportsModule'
-      },
-      {
-        path: 'users',
-        loadChildren: './theme/users/users.module#UsersModule'
-      },
-      {
-        path: 'crearcampos',
-        loadChildren: './theme/crearcampos/parametricas.module#ParametricasModule'
-      },
-      {
-        path: 'confcampos',
-        loadChildren: './theme/confcampos/confcampos.module#ConfCamposModule'
-      },
-      {
-        path: 'trazaxproducto',
-        loadChildren: './theme/trazaxproducto/trazaxproducto.module#TrazaXproductoModule'
-      }, 
-      {
-        path: 'historial',
-        loadChildren: './theme/historial/historial.module#HistorialXproductoModule'
-      },
-      {
-        path: 'repdisponibilidad',
-        loadChildren: './theme/repdisponibilidad/repdisponibilidad.module#RepDisponibilidadModule'
-      },
-      {
-        path: 'repdispsolpen',
-        loadChildren: './theme/repdispsolpen/repdispsolpen.module#RepDispSolPenModule'
-      },
-      {
-        path: 'repsolicitudes',
-        loadChildren: './theme/repsolicitudes/repsolicitudes.module#RepSolicitudesModule'
-      },    
-    ]   
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
   },
   {
-    path: '',
-    component: AuthComponent,
-    children: [     
-      {
-        path: 'auth',
-        loadChildren: './theme/auth/auth.module#AuthModule'
-      }
-    ]
+    path: 'dashboard',
+    component: AdminComponent, 
+    loadChildren: './theme/dashboard/dashboard.module#DashboardModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'reports',
+    component: AdminComponent, 
+    loadChildren: './theme/reports/reports.module#ReportsModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'users',
+    component: AdminComponent, 
+    loadChildren: './theme/users/users.module#UsersModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'crearcampos',
+    component: AdminComponent, 
+    loadChildren: './theme/crearcampos/parametricas.module#ParametricasModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'confcampos',
+    component: AdminComponent, 
+    loadChildren: './theme/confcampos/confcampos.module#ConfCamposModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'trazaxproducto',
+    component: AdminComponent, 
+    loadChildren: './theme/trazaxproducto/trazaxproducto.module#TrazaXproductoModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'historial',
+    component: AdminComponent, 
+    loadChildren: './theme/historial/historial.module#HistorialXproductoModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'repdisponibilidad',
+    component: AdminComponent, 
+    loadChildren: './theme/repdisponibilidad/repdisponibilidad.module#RepDisponibilidadModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'repdispsolpen',
+    component: AdminComponent, 
+    loadChildren: './theme/repdispsolpen/repdispsolpen.module#RepDispSolPenModule',
+    canActivate: [AppAuthGuard]
+  },
+  {
+    path: 'repsolicitudes',
+    component: AdminComponent, 
+    loadChildren: './theme/repsolicitudes/repsolicitudes.module#RepSolicitudesModule',
+    canActivate: [AppAuthGuard]
   }
 ];
 

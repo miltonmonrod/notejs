@@ -100,20 +100,10 @@
             <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass" (click)="toggleProfileNotification()">
               <a href="javascript:">
                 <img src="assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                <span>Usuario TRAZA</span>
+                <span>{{username}}</span>
                 <i class="ti-angle-down"></i>
               </a>
               <ul [@notificationBottom]="profileNotification" class="show-notification profile-notification">
-                <li>
-                  <a [routerLink]="['/user/profile/']">
-                    <i class="ti-user"></i> Perfil
-                  </a>
-                </li>               
-                <li>
-                  <a [routerLink]="['/auth/lock-screen/']">
-                    <i class="ti-lock"></i> Bloquear App
-                  </a>
-                </li>
                 <li>
                   <a (click)="logout()">
                     <i class="ti-layout-sidebar-left"></i> Salir

@@ -6,13 +6,12 @@ import { RepDispSolPenRoutingModule } from './repdispsolpen-routing-module';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DxDataGridModule, DxButtonModule, DxListModule, DxSelectBoxModule } from 'devextreme-angular';
-import { UsuariosService } from '../../services/usuario.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { SelectModule } from 'ng-select';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { isNumber, toInteger, padNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
-import { NgbModule, NgbDateParserFormatter, NgbDateStruct, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbDateStruct, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable()
 export class NgbDateCustomParserFormatter extends NgbDateParserFormatter {

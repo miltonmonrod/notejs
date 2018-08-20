@@ -3,6 +3,8 @@ import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/a
 import {MenuItems} from '../../shared/menu-items/menu-items';
 import { AuthenticationService } from '../../theme/auth/login/shared/authentication.service';
 import { StorageService } from '../../core/services/storage.service';
+import { KeycloakProfile } from 'keycloak-js';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-admin',
@@ -67,6 +69,9 @@ import { StorageService } from '../../core/services/storage.service';
   ]
 })
 export class AdminComponent implements OnInit {
+  userDetails: KeycloakProfile;
+  username: string;
+
   public navType: string;
   public themeLayout: string;
   public verticalPlacement: string;
@@ -121,7 +126,7 @@ export class AdminComponent implements OnInit {
   public config: any;
 
   constructor(    
-    public menuItems: MenuItems, public authenticationService: AuthenticationService, public storageService: StorageService  ) {
+    public menuItems: MenuItems, public authenticationService: AuthenticationService, public storageService: StorageService, private keycloakService: KeycloakService  ) {
     this.navType = 'st1';
     this.themeLayout = 'vertical';
     this.verticalPlacement = 'left';
@@ -173,16 +178,25 @@ export class AdminComponent implements OnInit {
     this.setHeaderAttributes(this.windowWidth);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.setBackgroundPattern('pattern1');   
+    this.getNombreUsuario();
     /*document.querySelector('body').classList.remove('dark');*/
   }
-  public logout(): void{
-    this.authenticationService.logout().subscribe(
-        response => {if(response) {}}
-    );
-    this.storageService.logout();
+  
+  public async getNombreUsuario(){
+   this.userDetails = await this.keycloakService.loadUserProfile();
+    if(this.userDetails != null){
+      this.username = this.userDetails.firstName + ' ' + this.userDetails.lastName;
+    }
   }
+
+  public async logout(){
+    console.log('called exit');
+    this.storageService.removeCurrentSession();
+    await this.keycloakService.logout();
+  }
+
   onResize(event) {
     this.windowWidth = event.target.innerWidth;
     this.setHeaderAttributes(this.windowWidth);

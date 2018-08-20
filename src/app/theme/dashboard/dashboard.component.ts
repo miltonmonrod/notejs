@@ -1,57 +1,71 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {animate, style, transition, trigger} from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { NotificationsService } from 'angular2-notifications';
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../../core/services/storage.service';
+import { Session } from '../../core/models/session.model';
+import { KeycloakService } from 'keycloak-angular';
 
-import {NotificationsService} from 'angular2-notifications';
-declare const AmCharts: any;
 @Component({
   selector: 'app-dasboard',
   templateUrl: './dashboard.component.html',
   styleUrls: [
     './dashboard.component.scss',
-    '../../../assets/icon/icofont/css/icofont.scss'    
+    '../../../assets/icon/icofont/css/icofont.scss'
   ],
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('fadeInOutTranslate', [
       transition(':enter', [
-        style({opacity: 0}),
-        animate('400ms ease-in-out', style({opacity: 1}))
+        style({ opacity: 0 }),
+        animate('400ms ease-in-out', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        style({transform: 'translate(0)'}),
-        animate('400ms ease-in-out', style({opacity: 0}))
+        style({ transform: 'translate(0)' }),
+        animate('400ms ease-in-out', style({ opacity: 0 }))
       ])
     ])
   ]
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-  private chart: any;
-  public seoCard1Data: any;
-  public seoCard2Data: any;
-  public seoCard1Option: any;
-  public seoCard2Option: any;
-  @ViewChild('seoCard1Chart') seoCard1Chart: ElementRef;
-  @ViewChild('seoCard2Chart') seoCard2Chart: ElementRef;
-  public seoCard1Tag: CanvasRenderingContext2D;
-  public seoCard2Tag: CanvasRenderingContext2D;
+  session: Session;
+  options: any = {
+    position: ['bottom', 'right'],
+  };
 
-  public feedbackData: any;
-  public feedbackOption: any;
+  constructor(private servicePNotify: NotificationsService, private route: ActivatedRoute, private storageService: StorageService, private keycloakService: KeycloakService ) {
+  }
 
-    options: any = {
-      position: ['bottom', 'right'],
-    };
-
-    constructor(private servicePNotify: NotificationsService) {
+  async ngOnInit() {
+    var ses = this.storageService.getCurrentSession();
+    if (ses === null) {
+      const idsucursal: string = this.route.snapshot.queryParamMap.get('idsucursal');
+      const idusuario: string = this.route.snapshot.queryParamMap.get('idusuario');
+      const idestablecimiento: string = this.route.snapshot.queryParamMap.get('idestablecimiento');
+      const email: string = this.route.snapshot.queryParamMap.get('email');
+      if (idsucursal != null && idusuario != null && idestablecimiento != null && email != null) {
+        this.session = {
+          idsucursal: idsucursal,
+          idestablecimiento:idestablecimiento,
+          idusuario:idusuario,
+          email: email,
+          idtipoproducto: null
+        }
+        this.storageService.setCurrentSession(this.session);
+      }
+      else {
+        console.log('called without parameters, exit');
+        //await this.keycloakService.logout();
+      }
     }
-
-  ngOnInit() {
+    else 
+      console.log(this.storageService.getCurrentSession().idusuario);
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.options  = {
-        position : ['bottom', 'right'],
+      this.options = {
+        position: ['bottom', 'right'],
         maxStack: 8,
         timeOut: 5000,
         showProgressBar: true,
@@ -64,17 +78,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         rtl: false,
         animate: 'rotate'
       };
-
-      this.servicePNotify.html(
+    this.servicePNotify.html(
         '<h4>Bienvenido!!</h4> <p>En este panel encontrará información estadistica para su gestión.</p>',
         'success'
-      );    
-      /* seo card end */
+      );
     }, 75);
   }
 
 }
-
-
-
-
