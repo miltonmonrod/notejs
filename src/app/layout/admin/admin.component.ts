@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
 import {MenuItems} from '../../shared/menu-items/menu-items';
-import { AuthenticationService } from '../../theme/auth/login/shared/authentication.service';
 import { StorageService } from '../../core/services/storage.service';
 import { KeycloakProfile } from 'keycloak-js';
 import { KeycloakService } from 'keycloak-angular';
@@ -126,7 +125,7 @@ export class AdminComponent implements OnInit {
   public config: any;
 
   constructor(    
-    public menuItems: MenuItems, public authenticationService: AuthenticationService, public storageService: StorageService, private keycloakService: KeycloakService  ) {
+    public menuItems: MenuItems, public storageService: StorageService, private keycloakService: KeycloakService  ) {
     this.navType = 'st1';
     this.themeLayout = 'vertical';
     this.verticalPlacement = 'left';

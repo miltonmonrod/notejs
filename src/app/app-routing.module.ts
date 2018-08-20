@@ -17,18 +17,6 @@ const routes: Routes = [
     canActivate: [AppAuthGuard]
   },
   {
-    path: 'reports',
-    component: AdminComponent, 
-    loadChildren: './theme/reports/reports.module#ReportsModule',
-    canActivate: [AppAuthGuard]
-  },
-  {
-    path: 'users',
-    component: AdminComponent, 
-    loadChildren: './theme/users/users.module#UsersModule',
-    canActivate: [AppAuthGuard]
-  },
-  {
     path: 'crearcampos',
     component: AdminComponent, 
     loadChildren: './theme/crearcampos/parametricas.module#ParametricasModule',

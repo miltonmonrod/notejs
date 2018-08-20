@@ -12,11 +12,7 @@ import { MenuItems } from './shared/menu-items/menu-items';
 import { BreadcrumbsComponent } from './layout/admin/breadcrumbs/breadcrumbs.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
-import { AuthenticationService } from './theme/auth/login/shared/authentication.service';
-import { UsuariosService } from './services/usuario.service';
-import { TokenInterceptor } from './theme/auth/token.interceptor';
 import { DxDataGridModule } from 'devextreme-angular';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NotificationsService } from 'angular2-notifications';
 import { ToastyService, ToastyModule } from 'ng2-toasty';
 import { SimpleNotificationsModule } from 'angular2-notifications';
@@ -47,7 +43,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
       multi: true,
       deps: [KeycloakService]
     },
-    MenuItems, AuthenticationService, NotificationsService, ToastyService
+    MenuItems, NotificationsService, ToastyService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ContratoService } from '../../services/contrato.service';
-import { AuthenticationService } from '../auth/login/shared/authentication.service';
 import { StorageService } from '../../core/services/storage.service';
 import { NotificationsService } from 'angular2-notifications';
 import { ReporteSolicitudes } from "../../models/ReporteSolicitudes";
@@ -57,7 +56,6 @@ export class RepSolicitudesComponent implements OnInit, AfterViewInit {
     };
     
     constructor(private parametricasService: ContratoService,
-        public authenticationService: AuthenticationService,
         public storageService: StorageService,
         private servicePNotify: NotificationsService) {
         this.inicializarModelo();
@@ -77,7 +75,6 @@ export class RepSolicitudesComponent implements OnInit, AfterViewInit {
                 this.error = error;
                 if (error.statusText === 'Unauthorized') {
                     this.servicePNotify.error('TRAZA', 'Se perdio la sesión, por favor loguearse de nuevo', '');
-                    this.authenticationService.logout().subscribe(response => { });
                     this.storageService.logout();
                 }
                 console.log(<any>error);
