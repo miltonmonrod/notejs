@@ -75,8 +75,8 @@ export class HistorialXproductoComponent implements OnInit, AfterViewInit {
             idtipoproducto: 1,
             aniovigencia: null,
             mesvigencia: null,
-            idsucursal: 1325,
-            idusuario: 441
+            idsucursal: this.storageService.getCurrentSession().idsucursal,
+            idusuario: this.storageService.getCurrentSession().idusuario
         };
         this.class_aniovigencia = false;
     }

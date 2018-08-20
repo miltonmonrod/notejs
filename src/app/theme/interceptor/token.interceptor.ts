@@ -13,13 +13,11 @@ export class TokenInterceptor implements HttpInterceptor {
     if(this.storageService.getCurrentSession() === null)
     {
       console.log('session lost');
-      //this.keycloakService.logout();
-      //return;
+      this.keycloakService.logout();
+      return;
     }
     console.log('Interceptor log');
     let headers = request.headers;
-    /*.set('Content-Type', 'application/json')
-    .set('Authorization', `Bearer ${this.auth.getCurrentToken()}`);*/
     const cloneReq = request.clone({ headers });
     return next.handle(cloneReq);
   }

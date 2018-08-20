@@ -16,6 +16,10 @@ const routes: Routes = [
     canActivate: [AppAuthGuard]
   },
   {
+    path: 'inicio',
+    loadChildren: './theme/inicio/inicio.module#InicioModule',
+  },
+  {
     path: 'crearcampos',
     component: AdminComponent, 
     loadChildren: './theme/crearcampos/parametricas.module#ParametricasModule',

@@ -1,7 +1,7 @@
 export class Session {
-  public idsucursal: string;
-  public idusuario: string;
-  public idestablecimiento: string;
+  public idsucursal: number;
+  public idusuario: number;
+  public idestablecimiento: number;
   public email: string;
-  public idtipoproducto: string;
+  public idtipoproducto: number;
 }

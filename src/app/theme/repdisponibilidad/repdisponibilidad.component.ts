@@ -103,8 +103,8 @@ export class RepDisponibilidadComponent implements OnInit, AfterViewInit {
             ruta: "",
             estado: "",
             fechareportedisp: null,
-            idusuario: 441,
-            idestablecimiento: 885
+            idusuario: this.storageService.getCurrentSession().idusuario,
+            idestablecimiento: this.storageService.getCurrentSession().idestablecimiento
         }
     }
 

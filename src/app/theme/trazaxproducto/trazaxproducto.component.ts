@@ -165,22 +165,12 @@ export class TrazaXproductoComponent implements OnInit, AfterViewInit {
             idtipoproducto: 1,
             aniovigencia: null,
             mesvigencia: null,
-            idsucursal: 1325,
-            idusuario: 441
+            idsucursal: this.storageService.getCurrentSession().idsucursal,
+            idusuario: this.storageService.getCurrentSession().idusuario
         };
         this.class_aniovigencia = false;
         this.class_mesvigencia = false;
         this.msjCargue = "";
-    }
-    onSubmit(isValid) {
-        this.class_aniovigencia = this.reporte.aniovigencia === null;
-        this.class_mesvigencia = this.reporte.mesvigencia === null;
-        if (isValid &&
-            !this.class_aniovigencia &&
-            !this.class_mesvigencia
-        ){
-
-        }
     }
     subidaCompleta(e) {
         if (e.request.response.split('|')[0] === 'Success') {

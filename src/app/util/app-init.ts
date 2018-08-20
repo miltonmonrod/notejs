@@ -21,7 +21,7 @@ export function initializer(
             enableBearerInterceptor: true,
             bearerExcludedUrls: [
               '/assets',
-              '/auth/login'
+              '/inicio'
             ],
           });
         

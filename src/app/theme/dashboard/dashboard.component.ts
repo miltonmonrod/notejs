@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StorageService } from '../../core/services/storage.service';
 import { Session } from '../../core/models/session.model';
 import { KeycloakService } from 'keycloak-angular';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-dasboard',
@@ -38,6 +39,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     var ses = this.storageService.getCurrentSession();
+    
+    let header = new HttpHeaders();
+    console.log('Aut:' + header.get('Authorization')) 
+
     if (ses === null) {
       const idsucursal: string = this.route.snapshot.queryParamMap.get('idsucursal');
       const idusuario: string = this.route.snapshot.queryParamMap.get('idusuario');
@@ -45,9 +50,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const email: string = this.route.snapshot.queryParamMap.get('email');
       if (idsucursal != null && idusuario != null && idestablecimiento != null && email != null) {
         this.session = {
-          idsucursal: idsucursal,
-          idestablecimiento:idestablecimiento,
-          idusuario:idusuario,
+          idsucursal: parseInt(idsucursal),
+          idestablecimiento: parseInt(idestablecimiento),
+          idusuario: parseInt(idusuario),
           email: email,
           idtipoproducto: null
         }
@@ -55,7 +60,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
       else {
         console.log('called without parameters, exit');
-        //await this.keycloakService.logout();
+        await this.keycloakService.logout();
       }
     }
     else 
