@@ -6,7 +6,6 @@ import { HistorialXproductoRoutingModule } from './historial-routing-module';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DxDataGridModule, DxButtonModule, DxListModule, DxSelectBoxModule } from 'devextreme-angular';
-import { UsuariosService } from '../../services/usuario.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { SimpleNotificationsModule } from 'angular2-notifications';

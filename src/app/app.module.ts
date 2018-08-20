@@ -5,7 +5,6 @@ import { initializer } from './util/app-init'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './layout/admin/admin.component';
-import { AuthComponent } from './layout/auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { MenuItems } from './shared/menu-items/menu-items';
@@ -21,7 +20,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
   declarations: [
     AppComponent,
     AdminComponent,
-    AuthComponent,
     BreadcrumbsComponent
   ],
   imports: [
