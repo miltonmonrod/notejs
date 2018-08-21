@@ -100,7 +100,7 @@
             <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass" (click)="toggleProfileNotification()">
               <a href="javascript:">
                 <img src="assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                <span>{{username}}</span>
+                <span>{{username}} - Rol: {{role}}</span>
                 <i class="ti-angle-down"></i>
               </a>
               <ul [@notificationBottom]="profileNotification" class="show-notification profile-notification">
@@ -239,7 +239,7 @@
         >
           <div class="pcoded-inner-navbar main-menu" appAccordion>
             <perfect-scrollbar [style.max-width]="'235px'" [style.max-height]="sidebarFixedHeight" [config]="config">
-              <span *ngFor="let asideItems of menuItems.getAll()" class="d-color">
+              <span *ngFor="let asideItems of menuItems.getAll(roles)" class="d-color">
                 <div class="pcoded-navigation-label" [attr.menu-title-theme]="menuTitleTheme">{{asideItems.label}}</div>
                 <ul class="pcoded-item pcoded-left-item" [attr.item-border]="itemBorder" [attr.item-border-style]="itemBorderStyle" [attr.subitem-border]="subItemBorder" *ngFor="let asideItem of asideItems.main" appAccordionLink group="{{asideItem.state}}">
                   <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'external'" appAccordionLink group="{{asideItem.state}}">

@@ -4,7 +4,6 @@ import { ContratoService } from '../../services/contrato.service';
 import { StorageService } from '../../core/services/storage.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
-import { HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-contratos',

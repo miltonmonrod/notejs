@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { KeycloakService, KeycloakAuthGuard } from 'keycloak-angular';
+import { StorageService } from '../../core/services/storage.service';
 
 @Injectable()
 export class AppAuthGuard extends KeycloakAuthGuard {
-  constructor(protected router: Router, protected keycloakAngular: KeycloakService) {
+  constructor(protected router: Router, protected keycloakAngular: KeycloakService, public storageService: StorageService) {
     super(router, keycloakAngular);
   }
 
@@ -14,23 +15,8 @@ export class AppAuthGuard extends KeycloakAuthGuard {
       if (!this.authenticated) {
         return;
       }
-
-      const requiredRoles = route.data.roles;
-      if (!requiredRoles || requiredRoles.length === 0) {
-        return resolve(true);
-      } else {
-        if (!this.roles || this.roles.length === 0) {
-          resolve(false);
-        }
-        let granted: boolean = false;
-        for (const requiredRole of requiredRoles) {
-          if (this.roles.indexOf(requiredRole) > -1) {
-            granted = true;
-            break;
-          }
-        }
-        resolve(granted);
-      }
+      this.storageService.setCurrentRoles(this.roles);
+      resolve(true);
     });
   }
 }

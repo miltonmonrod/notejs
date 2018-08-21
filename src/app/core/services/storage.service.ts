@@ -6,6 +6,8 @@ export class StorageService {
 
     private localStorageService;
     private currentSession: Session = null;
+    private currentRoles: any;
+
     constructor() {
         this.localStorageService = localStorage;
         this.currentSession = this.loadSessionData();
@@ -30,12 +32,27 @@ export class StorageService {
         this.currentSession = null;
     }
 
+    setCurrentRoles(roles: any): void {
+        this.currentRoles = roles;
+        this.localStorageService.setItem('roles', roles);
+    }
+
+    getCurrentRoles(): any {
+        return this.currentRoles;
+    }
+
+    removeCurrentRoles(): void {
+        this.localStorageService.removeItem('roles');
+        this.currentRoles = null;
+    }
+
     logout(): void {
         this.removeCurrentSession();
+        this.removeCurrentRoles();
     }
 
     getCurrentUser(): string {
         var session: Session = this.getCurrentSession();
-        return (session && session.idusuario) ? session.idusuario : null;
+        return (session && session.idusuario) ? session.idusuario.toString() : null;
     };
 }

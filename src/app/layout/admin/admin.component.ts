@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
-import {MenuItems} from '../../shared/menu-items/menu-items';
+import { animate, AUTO_STYLE, state, style, transition, trigger } from '@angular/animations';
+import { MenuItems } from '../../shared/menu-items/menu-items';
 import { StorageService } from '../../core/services/storage.service';
 import { KeycloakProfile } from 'keycloak-js';
-import { KeycloakService } from 'keycloak-angular';
+import { KeycloakService, KeycloakAuthGuard } from 'keycloak-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -57,19 +58,22 @@ import { KeycloakService } from 'keycloak-angular';
     ]),
     trigger('fadeInOutTranslate', [
       transition(':enter', [
-        style({opacity: 0}),
-        animate('400ms ease-in-out', style({opacity: 1}))
+        style({ opacity: 0 }),
+        animate('400ms ease-in-out', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        style({transform: 'translate(0)'}),
-        animate('400ms ease-in-out', style({opacity: 0}))
+        style({ transform: 'translate(0)' }),
+        animate('400ms ease-in-out', style({ opacity: 0 }))
       ])
     ])
   ]
 })
+
 export class AdminComponent implements OnInit {
   userDetails: KeycloakProfile;
   username: string;
+  roles: any;
+  role: string;
 
   public navType: string;
   public themeLayout: string;
@@ -121,11 +125,16 @@ export class AdminComponent implements OnInit {
   public sidebarFixedHeight: string;
   public itemBorderStyle: string;
   public subItemBorder: boolean;
-  public itemBorder: boolean;  
+  public itemBorder: boolean;
   public config: any;
 
-  constructor(    
-    public menuItems: MenuItems, public storageService: StorageService, private keycloakService: KeycloakService  ) {
+
+  constructor(
+    public menuItems: MenuItems, public storageService: StorageService, public router: Router, private keycloakService: KeycloakService) {
+    this.roles = this.storageService.getCurrentRoles();
+    if (this.roles.length > 0) {
+      this.role = this.roles[0] != 'view-profile' ? this.roles[0] : 'Traza';
+    }
     this.navType = 'st1';
     this.themeLayout = 'vertical';
     this.verticalPlacement = 'left';
@@ -178,19 +187,19 @@ export class AdminComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.setBackgroundPattern('pattern1');   
+    this.setBackgroundPattern('pattern1');
     this.getNombreUsuario();
     /*document.querySelector('body').classList.remove('dark');*/
   }
-  
-  public async getNombreUsuario(){
-   this.userDetails = await this.keycloakService.loadUserProfile();
-    if(this.userDetails != null){
+
+  public async getNombreUsuario() {
+    this.userDetails = await this.keycloakService.loadUserProfile();
+    if (this.userDetails != null) {
       this.username = this.userDetails.firstName + ' ' + this.userDetails.lastName;
     }
   }
 
-  public async logout(){
+  public async logout() {
     console.log('called exit');
     this.storageService.removeCurrentSession();
     await this.keycloakService.logout();
