@@ -9,6 +9,11 @@ export function initializer(
       try {
         
           await keycloak.init({
+            /*config: {
+              url: 'http://localhost:8080/auth',
+              realm: 'Traza',
+              clientId: 'frontend-traza'
+            },*/
             config: {
               url: 'http://172.16.60.51:8182/auth',
               realm: 'InvimaExternos',
