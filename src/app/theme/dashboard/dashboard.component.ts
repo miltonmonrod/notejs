@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     }
     else 
-      console.log(this.storageService.getCurrentSession().idusuario);*/
+      console.log(this.storageService.getCurrentSession().idusuario);
   }
 
   ngAfterViewInit() {
