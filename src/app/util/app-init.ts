@@ -14,14 +14,19 @@ export function initializer(
               realm: 'Traza',
               clientId: 'frontend-traza'
             },*/
+            // config: {
+            //   url: 'http://172.16.60.51:8182/auth',
+            //   realm: 'InvimaExternos',
+            //   clientId: 'account'
+            // },
             config: {
-              url: 'http://172.16.60.51:8182/auth',
+              url: 'http://172.16.60.91:8184/auth',
               realm: 'InvimaExternos',
-              clientId: 'account'
+              clientId: 'front-end-dev'
             },
             initOptions: {
               onLoad: 'login-required',
-              checkLoginIframe: false
+              checkLoginIframe: false,
             },
             enableBearerInterceptor: true,
             bearerExcludedUrls: [
@@ -29,7 +34,6 @@ export function initializer(
               '/inicio'
             ],
           });
-        
         resolve();
       } catch (error) {
        

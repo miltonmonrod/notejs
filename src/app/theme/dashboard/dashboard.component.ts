@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     
     let header = new HttpHeaders();
     console.log('Aut:' + header.get('Authorization')) 
-
+    //alert('llego:' + this.route.snapshot.queryParamMap.get('idsucursal'))
     if (ses === null) {
       const idsucursal: string = this.route.snapshot.queryParamMap.get('idsucursal');
       const idusuario: string = this.route.snapshot.queryParamMap.get('idusuario');
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     }
     else 
-      console.log(this.storageService.getCurrentSession().idusuario);
+      console.log(this.storageService.getCurrentSession().idusuario);*/
   }
 
   ngAfterViewInit() {
