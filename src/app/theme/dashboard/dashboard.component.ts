@@ -44,10 +44,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     console.log('Aut:' + header.get('Authorization')) 
     //alert('llego:' + this.route.snapshot.queryParamMap.get('idsucursal'))
     if (ses === null) {
-      const idsucursal: string = this.route.snapshot.queryParamMap.get('idsucursal');
-      const idusuario: string = this.route.snapshot.queryParamMap.get('idusuario');
-      const idestablecimiento: string = this.route.snapshot.queryParamMap.get('idestablecimiento');
-      const email: string = this.route.snapshot.queryParamMap.get('email');
+      const idsucursal: string = this.route.snapshot.queryParamMap.get('IDSUCURSAL');
+      const idusuario: string = this.route.snapshot.queryParamMap.get('IDUSUARIO');
+      const idestablecimiento: string = this.route.snapshot.queryParamMap.get('IDESTABLECIMIENTO');
+      const email: string = this.route.snapshot.queryParamMap.get('CORREO');
       if (idsucursal != null && idusuario != null && idestablecimiento != null && email != null) {
         this.session = {
           idsucursal: parseInt(idsucursal),
